@@ -1,0 +1,26 @@
+services:
+  # 1. Backend Service (FastAPI)
+  - type: web
+    name: vigilant-ai-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: BACKEND_CORS_ORIGINS
+        value: https://vigilant-ai-frontend.onrender.com # Update this after deploying frontend
+    disk:
+      name: data
+      mountPath: /data
+      sizeGB: 1
+
+  # 2. Frontend Service (Vite/React)
+  - type: static
+    name: vigilant-ai-frontend
+    env: node
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://vigilant-ai-backend.onrender.com # Update this after deploying backend
