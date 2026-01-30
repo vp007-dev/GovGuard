@@ -10,10 +10,12 @@ services:
         value: 3.11.0
       - key: BACKEND_CORS_ORIGINS
         value: https://vigilant-ai-frontend.onrender.com # Update this after deploying frontend
-    disk:
-      name: data
-      mountPath: /data
-      sizeGB: 1
+    # disk:
+    #   name: data
+    #   mountPath: /data
+    #   sizeGB: 1
+    # NOTE: Disks require a paid plan. Uncomment above for persistence.
+    # For Free Tier, data will be lost when the instance spins down.
 
   # 2. Frontend Service (Vite/React) - Served as Web Service
   - type: web
