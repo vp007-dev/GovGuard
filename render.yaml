@@ -15,12 +15,13 @@ services:
       mountPath: /data
       sizeGB: 1
 
+      sizeGB: 1
+
+staticSites:
   # 2. Frontend Service (Vite/React)
-  - type: static
-    name: vigilant-ai-frontend
-    env: node
+  - name: vigilant-ai-frontend
     buildCommand: npm install && npm run build
-    staticPublishPath: dist
+    publishPath: dist
     envVars:
       - key: VITE_API_URL
         value: https://vigilant-ai-backend.onrender.com # Update this after deploying backend
