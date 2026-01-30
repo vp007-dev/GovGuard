@@ -2,6 +2,7 @@ services:
   # 1. Backend Service (FastAPI)
   - type: web
     name: vigilant-ai-backend
+    plan: free
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
@@ -20,6 +21,7 @@ services:
   # 2. Frontend Service (Vite/React) - Served as Web Service
   - type: web
     name: vigilant-ai-frontend
+    plan: free
     env: node
     buildCommand: npm install && npm run build
     startCommand: npx serve -s dist -l $PORT
