@@ -15,13 +15,15 @@ services:
       mountPath: /data
       sizeGB: 1
 
-      sizeGB: 1
-
-staticSites:
-  # 2. Frontend Service (Vite/React)
-  - name: vigilant-ai-frontend
+  # 2. Frontend Service (Vite/React) - Served as Web Service
+  - type: web
+    name: vigilant-ai-frontend
+    env: node
     buildCommand: npm install && npm run build
-    publishPath: dist
+    startCommand: npx serve -s dist -l $PORT
     envVars:
       - key: VITE_API_URL
-        value: https://vigilant-ai-backend.onrender.com # Update this after deploying backend
+        value: https://vigilant-ai-backend.onrender.com
+    # Note: 'serve' must be available or routed via npx. VITE_API_URL is baked in at build time, 
+    # so for true runtime config in static sites we usually need a rebuild. 
+    # But since we are building on the server, this checks out.
