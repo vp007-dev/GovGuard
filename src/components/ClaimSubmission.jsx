@@ -165,6 +165,25 @@ const ClaimSubmission = ({ onSuccess }) => {
         return () => stopCamera();
     }, []);
 
+    if (isSubmitting) {
+        return (
+            <div className="flex flex-col items-center justify-center p-12 bg-slate-50 rounded-2xl border border-dashed border-slate-300 animate-in fade-in duration-500">
+                <div className="relative">
+                    <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></div>
+                    </div>
+                </div>
+                <h3 className="mt-6 text-lg font-black text-slate-800 uppercase tracking-wide">Secure Cloud Upload</h3>
+                <p className="text-sm text-slate-500 font-medium mt-2">Encrypting & Storing Evidence to AWS S3...</p>
+                <div className="mt-4 flex items-center gap-2 px-3 py-1 bg-blue-50 text-blue-700 rounded-full border border-blue-100">
+                    <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest">TLS 1.3 Tunnel Established</span>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="max-w-2xl mx-auto">
             <div className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">

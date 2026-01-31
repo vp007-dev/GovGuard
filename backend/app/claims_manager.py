@@ -7,6 +7,8 @@ from PIL import Image
 from PIL.ExifTags import TAGS, GPSTAGS
 import imagehash
 
+from .services.mock_cloud import mock_s3
+
 CLAIMS_FILE = "claims_store.json"
 
 class ClaimsManager:
@@ -126,6 +128,11 @@ class ClaimsManager:
             
             timestamp = datetime.now().isoformat()
             
+            # 4. Mock Cloud Upload (S3)
+            # In a real app, we would upload 'image_path' to S3 and get the URL.
+            # Here, our Mock Service simulates that latency and returns a fake S3 URL.
+            s3_url = mock_s3.upload_file(image_file_path)
+            
             new_claim = {
                 "claim_id": f"CLM-{len(self.claims) + 1000}",
                 "fund_id": fund_id,
@@ -133,7 +140,8 @@ class ClaimsManager:
                 "claimant_name": claim_data.get("claimant_name"),
                 "description": claim_data.get("description"),
                 "timestamp": timestamp,
-                "image_path": image_file_path,  # In real app, store relative path or S3 URL
+                "image_path": image_file_path,  # Keep local path for serving
+                "s3_url": s3_url, # Storing the "Cloud" URL for audit trail
                 "image_hash": img_hash,
                 "location": {
                     "latitude": lat,

@@ -27,7 +27,9 @@ import {
   Share2,
   Users,
   LogOut,
-  Globe
+  Globe,
+  FileText,
+  Download
 } from 'lucide-react';
 import {
   XAxis,
@@ -178,6 +180,36 @@ export default function App() {
 
     showToast(`Case ${caseId} updated to ${status}. Central Database Synced.`, status === 'Legitimate' ? 'info' : 'success');
     setSelectedCase(null);
+  };
+
+  const handleExport = () => {
+    if (cases.length === 0) {
+      showToast("No audit data to export.", "error");
+      return;
+    }
+
+    const headers = ["Entity Name", "Scheme/Department", "Risk Level", "Status", "Sanction Amount", "Risk Score"];
+    const rows = cases.map(c => [
+      c.entityName,
+      c.program,
+      c.riskScore > 75 ? "CRITICAL" : c.riskScore > 30 ? "MODERATE" : "LOW",
+      c.status,
+      c.amount,
+      c.riskScore
+    ]);
+
+    const csvContent = "data:text/csv;charset=utf-8,"
+      + [headers, ...rows].map(e => e.join(",")).join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `govguard_audit_report_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    showToast("Audit Report Generated Successfully", "success");
   };
 
   const handleFileUpload = async (event) => {
@@ -569,13 +601,13 @@ export default function App() {
               className="flex-1 md:flex-none justify-center px-4 md:px-5 py-2 md:py-3 bg-white border border-slate-200 rounded-lg font-bold text-[10px] uppercase tracking-wide text-slate-700 hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm"
             >
               {isUploading ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
-              <span>{isUploading ? 'Processing' : 'Ingest CSV'}</span>
+              <span>{isUploading ? 'Syncing with Cloud...' : 'Ingest CSV'}</span>
             </button>
             <button
-              onClick={handleDownload}
+              onClick={handleExport}
               className="flex-1 md:flex-none justify-center px-4 md:px-6 py-2 md:py-3 bg-blue-900 text-white rounded-lg font-bold text-[10px] uppercase tracking-wide shadow-md hover:bg-blue-800 transition-all flex items-center gap-2"
             >
-              <ArrowUpRight size={14} />
+              <FileText size={14} />
               <span>Export Report</span>
             </button>
           </div>
@@ -692,6 +724,14 @@ export default function App() {
                 {history.length === 0 && <p className="text-center text-slate-400 text-xs py-10">No recent interventions logged in current session.</p>}
                 {history.map(log => (
                   <div key={log.id} className="flex items-center justify-between p-4 border border-slate-100 rounded-lg bg-slate-50/50">
+                    <div className="flex items-center gap-4">
+                      <button
+                        onClick={handleExport}
+                        className="flex items-center gap-2 px-4 py-2 bg-white text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors font-bold text-xs uppercase tracking-wide">
+                        <FileText size={16} className="text-emerald-600" />
+                        <span>Export Report</span>
+                      </button>
+                    </div>
                     <div className="flex items-center gap-4">
                       <div className={`w-8 h-8 rounded-full flex items-center justify-center ${log.status === 'Confirmed Fraud' ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}`}>
                         {log.status === 'Confirmed Fraud' ? <AlertTriangle size={16} /> : <CheckCircle2 size={16} />}

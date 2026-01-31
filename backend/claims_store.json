@@ -1,1 +1,46 @@
-[]
+[
+    {
+        "claim_id": "CLM-1000",
+        "fund_id": "123",
+        "amount": 100000000.0,
+        "claimant_name": "yashhh",
+        "description": "road",
+        "timestamp": "2026-01-31T11:34:20.590164",
+        "image_path": "uploaded_images/live_capture.jpg",
+        "s3_url": "https://s3.ap-south-1.amazonaws.com/govguard-audit-evidence/live_capture.jpg",
+        "image_hash": "c4cc6b99cac699c5",
+        "location": {
+            "latitude": null,
+            "longitude": null,
+            "geohash": "UNKNOWN"
+        },
+        "status": "Pending Community Verification",
+        "community_votes": {
+            "approvals": 0,
+            "rejections": 0,
+            "reminders": 0
+        }
+    },
+    {
+        "claim_id": "CLM-1001",
+        "fund_id": "12344",
+        "amount": 10000.0,
+        "claimant_name": "Koe",
+        "description": "Road",
+        "timestamp": "2026-01-31T11:41:07.309800",
+        "image_path": "uploaded_images/live_capture.jpg",
+        "s3_url": "https://s3.ap-south-1.amazonaws.com/govguard-audit-evidence/live_capture.jpg",
+        "image_hash": "84a6226a4b6befd4",
+        "location": {
+            "latitude": null,
+            "longitude": null,
+            "geohash": "UNKNOWN"
+        },
+        "status": "Pending Community Verification",
+        "community_votes": {
+            "approvals": 0,
+            "rejections": 0,
+            "reminders": 0
+        }
+    }
+]

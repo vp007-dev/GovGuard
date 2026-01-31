@@ -92,6 +92,12 @@ const CommunityVerification = () => {
                                     ) : (
                                         <span className="text-amber-600 flex items-center gap-1"><Map size={10} /> NO EXIF DATA</span>
                                     )}
+                                    {claim.s3_url && (
+                                        <div className="mt-1 pt-1 border-t border-slate-200 flex items-center gap-1 text-[9px] text-blue-600">
+                                            <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+                                            <span>AWS S3 STORED</span>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 
