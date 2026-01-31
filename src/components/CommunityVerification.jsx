@@ -8,7 +8,8 @@ const CommunityVerification = () => {
     const fetchClaims = async () => {
         try {
             setLoading(true);
-            const res = await fetch("http://localhost:8000/claims");
+            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+            const res = await fetch(`${apiUrl}/claims`);
             const data = await res.json();
             setClaims(data);
         } catch (err) {
@@ -27,7 +28,8 @@ const CommunityVerification = () => {
             const formData = new FormData();
             formData.append("action", action);
 
-            const res = await fetch(`http://localhost:8000/verify-claim/${claimId}`, {
+            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+            const res = await fetch(`${apiUrl}/verify-claim/${claimId}`, {
                 method: "POST",
                 body: formData
             });
