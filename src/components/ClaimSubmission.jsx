@@ -143,7 +143,7 @@ const ClaimSubmission = ({ onSuccess }) => {
         }
 
         try {
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+            const apiUrl = import.meta.env.VITE_API_URL || 'https://vigilant-ai-backend.onrender.com';
             const response = await fetch(`${apiUrl}/submit-claim`, {
                 method: "POST",
                 body: data

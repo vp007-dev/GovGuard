@@ -8,7 +8,7 @@ const CommunityVerification = () => {
     const fetchClaims = async () => {
         try {
             setLoading(true);
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+            const apiUrl = import.meta.env.VITE_API_URL || 'https://vigilant-ai-backend.onrender.com';
             const res = await fetch(`${apiUrl}/claims`);
             const data = await res.json();
             setClaims(data);
@@ -28,7 +28,7 @@ const CommunityVerification = () => {
             const formData = new FormData();
             formData.append("action", action);
 
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+            const apiUrl = import.meta.env.VITE_API_URL || 'https://vigilant-ai-backend.onrender.com';
             const res = await fetch(`${apiUrl}/verify-claim/${claimId}`, {
                 method: "POST",
                 body: formData
@@ -79,7 +79,7 @@ const CommunityVerification = () => {
                         <div key={claim.claim_id} className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow">
                             <div className="h-48 bg-slate-100 relative group cursor-pointer">
                                 <img
-                                    src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/${claim.image_path.replace('uploaded_images', 'images')}`}
+                                    src={`${import.meta.env.VITE_API_URL || 'https://vigilant-ai-backend.onrender.com'}/${claim.image_path.replace('uploaded_images', 'images')}`}
                                     alt="Proof"
                                     className="w-full h-full object-cover"
                                 />

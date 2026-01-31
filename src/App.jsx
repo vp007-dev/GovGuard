@@ -26,7 +26,8 @@ import {
   Menu,
   Share2,
   Users,
-  LogOut
+  LogOut,
+  Globe
 } from 'lucide-react';
 import {
   XAxis,
@@ -45,6 +46,7 @@ import {
 import ClaimSubmission from './components/ClaimSubmission';
 import CommunityVerification from './components/CommunityVerification';
 import LandingPage from './components/LandingPage';
+import SatelliteAnalysis from './components/SatelliteAnalysis';
 
 // --- MOCK DATA GENERATION ---
 const PROGRAMS = ['Scholarship', 'Pension', 'Public Works', 'Procurement'];
@@ -187,7 +189,7 @@ export default function App() {
 
     try {
       setIsUploading(true);
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const apiUrl = import.meta.env.VITE_API_URL || 'https://vigilant-ai-backend.onrender.com';
       const response = await fetch(`${apiUrl}/analyze`, {
         method: "POST",
         body: formData,
@@ -510,8 +512,9 @@ export default function App() {
           </div>
           <nav className="space-y-1">
             <SidebarItem id="dashboard" icon={LayoutDashboard} label="Audit Dashboard" />
-            <SidebarItem id="submit-claim" icon={Upload} label="Submit Claim" />
-            <SidebarItem id="community" icon={Users} label="Community Verify" />
+            <SidebarItem id="submit-claim" icon={ArrowUpRight} label="Submit Claim" />
+            <SidebarItem id="verify" icon={Users} label="Community Verify" />
+            <SidebarItem id="satellite" icon={Globe} label="Satellite Surveillance" />
             <SidebarItem id="queue" icon={Database} label="Intelligence Queue" />
             <SidebarItem id="network" icon={Share2} label="Network Links" />
             <SidebarItem id="feedback" icon={History} label="System Evolution" />
@@ -579,6 +582,14 @@ export default function App() {
         </header>
 
         {activeTab === 'dashboard' && <DashboardView />}
+
+        {activeTab === 'verify' && (
+          <CommunityVerification />
+        )}
+
+        {activeTab === 'satellite' && (
+          <SatelliteAnalysis />
+        )}
 
         {activeTab === 'queue' && (
           <Card title="Government Audit Database" className="animate-in fade-in duration-300">
